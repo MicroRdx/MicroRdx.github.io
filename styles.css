@@ -1,0 +1,58 @@
+/* General styling */
+body {
+    font-family: sans-serif;
+    margin: 40px;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  /* Input and buttons */
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #3e8e41;
+  }
+  
+  /* List styling */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  li {
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Container styling (optional) */
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+
+
+  .verticalScroll{
+    overflow-y: scroll;
+height: 40rem;
+  }
