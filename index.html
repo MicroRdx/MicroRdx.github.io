@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Food Suggestion App</title>
+    <title>KyaBanay</title>
+    <link rel="icon" href="assets/kyaBanay.png" type="image/x-icon"/>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Food Suggestion App</h1>
+      <h1>Kya Banay</h1>
       <input type="text" id="foodItemInput" placeholder="Enter a food item" />
       <button id="addItemButton">Add Item</button>
       <div class="verticalScroll">
@@ -20,170 +21,6 @@
       </button>
     </div>
 
-    <!-- <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js"></script> -->
-    <!-- <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyDWdUdKgerRFYlUAGSrld-20_yqT23tgNs",
-        authDomain: "vrafoods-7cb35.firebaseapp.com",
-        projectId: "vrafoods-7cb35",
-        storageBucket: "vrafoods-7cb35.appspot.com",
-        messagingSenderId: "688423670266",
-        appId: "1:688423670266:web:5a1e92f59195084669d443",
-      };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig); // Initialize first
-      const database = firebase.database(); // Then access the database
-    </script> -->
-
-    <!-- <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-        get,
-        child,
-      } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
-
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyDWdUdKgerRFYlUAGSrld-20_yqT23tgNs",
-        authDomain: "vrafoods-7cb35.firebaseapp.com",
-        projectId: "vrafoods-7cb35",
-        storageBucket: "vrafoods-7cb35.appspot.com",
-        messagingSenderId: "688423670266",
-        appId: "1:688423670266:web:5a1e92f59195084669d443",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
-
-
-      const foodList = document.getElementById("foodList");
-      const addItemButton = document.getElementById("addItemButton");
-      const selectRandomDishButton = document.getElementById(
-        "selectRandomDishButton"
-      );
-      const foodItemInput = document.getElementById("foodItemInput");
-
-      // Load saved items (prioritize Firebase, then local storage)
-      database.ref("foodItems").on("value", (snapshot) => {
-        const savedItems = snapshot.val();
-        if (savedItems) {
-          loadItems(savedItems); 
-        } else {
-          const localData = localStorage.getItem("foodItems");
-          if (localData) {
-            loadItems(localData); 
-            database.ref("foodItems").set(localData); 
-          }
-        }
-      });
-
-      function loadItems(itemsArray) {
-        itemsArray.forEach((item) => {
-          const itemElement = document.createElement("li");
-          itemElement.textContent = item;
-          foodList.appendChild(itemElement);
-          addDeleteButton(itemElement);
-        });
-      }
-
-      // // Load saved items from local storage
-      // const savedItems = localStorage.getItem('foodItems');
-      // if (savedItems) {
-      //     const savedItemsArray = JSON.parse(savedItems);
-      //     savedItemsArray.forEach(item => {
-      //         const itemElement = document.createElement('li');
-      //         itemElement.textContent = item;
-      //         foodList.appendChild(itemElement);
-      //         addDeleteButton(itemElement); // Add delete button to loaded items
-      //     });
-      // }
-
-      // Add item functionality
-      addItemButton.addEventListener("click", () => {
-        const itemName = foodItemInput.value.trim();
-        if (itemName) {
-          const itemElement = document.createElement("li");
-          itemElement.textContent = itemName;
-          foodList.appendChild(itemElement);
-          foodItemInput.value = "";
-
-          // Update both Firebase and local storage
-          const itemsArray = [...foodList.children].map(
-            (item) => item.textContent
-          );
-          localStorage.setItem("foodItems", JSON.stringify(itemsArray));
-          database.ref("foodItems").set(JSON.stringify(itemsArray));
-
-          // // Store items in local storage
-          // const itemsArray = [...foodList.children].map(item => item.textContent);
-          // localStorage.setItem('foodItems', JSON.stringify(itemsArray));
-
-          addDeleteButton(itemElement); // Add delete button to new items
-        }
-      });
-
-      // Select random dish functionality
-      selectRandomDishButton.addEventListener("click", () => {
-        const items = Array.from(foodList.children);
-        const randomIndex = Math.floor(Math.random() * items.length);
-        const selectedDish = items[randomIndex].textContent;
-        alert("Selected dish: " + selectedDish);
-      });
-
-      // Edit item functionality
-      foodList.addEventListener("dblclick", (event) => {
-        const itemElement = event.target;
-        if (itemElement.tagName === "LI") {
-          const originalText = itemElement.textContent.replace("Delete", "");
-          const input = document.createElement("input");
-          input.type = "text";
-          input.value = originalText;
-          itemElement.textContent = "";
-          itemElement.appendChild(input);
-          input.addEventListener("blur", () => {
-            const newText = input.value.trim();
-            if (newText) {
-              itemElement.textContent = newText;
-              // Update items in local storage
-              const itemsArray = [...foodList.children].map((item) =>
-                item.textContent.replace("Delete", "")
-              );
-              localStorage.setItem("foodItems", JSON.stringify(itemsArray));
-            } else {
-              itemElement.remove();
-            }
-          });
-          input.focus();
-        }
-      });
-
-      // Add delete button to each list item
-      function addDeleteButton(itemElement) {
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.setAttribute(
-          "style",
-          "margin-left:1rem; background-color: #d11a2a"
-        );
-        deleteButton.addEventListener("click", () => {
-          itemElement.remove();
-          // Update items in local storage
-          const itemsArray = [...foodList.children].map(
-            (item) => item.textContent
-          );
-          localStorage.setItem("foodItems", JSON.stringify(itemsArray));
-        });
-        itemElement.appendChild(deleteButton);
-      }
-    </script> -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script src="script.js"></script>
