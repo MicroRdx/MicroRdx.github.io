@@ -39,7 +39,10 @@ $.ajax(settings).done(function (response) {
     const localSavedItemsList = JSON.parse(localSavedItems);
     const savedItemsArray = JSON.parse(savedItems);
     // Store items in local storage
-    const mergedItemsArray =  [...localSavedItemsList, ...savedItemsArray] //[...foodList.children].map(item => item.textContent);
+    const mergedItemsArray = savedItemsArray //[...foodList.children].map(item => item.textContent);
+    if(localSavedItemsList){
+      const mergedItemsArray =  [...localSavedItemsList, ...savedItemsArray] //[...foodList.children].map(item => item.textContent);
+    }
     const uniqueItemsArray = mergedItemsArray.filter((item, index) => mergedItemsArray.indexOf(item) === index);
     localStorage.setItem('foodItems', JSON.stringify(uniqueItemsArray));
     foodList.innerHTML = ''; // removing all the child elements 
